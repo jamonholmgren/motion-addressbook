@@ -3,17 +3,17 @@ module AddressBook
 
   def address_book
     if UIDevice.currentDevice.systemVersion >= '6'
-      # ios6_create
+      ios6_create
     else
       ios5_create
     end
   end
 
   def ios6_create
-    # error = nil
-    # address_book = ABAddressBookCreateWithOptions(nil, error)
-    # request_authorization unless authorized?
-    # address_book
+    error = nil
+    address_book = ABAddressBookCreateWithOptions(nil, error)
+    request_authorization unless authorized?
+    address_book
   end
 
   def ios5_create
@@ -52,5 +52,4 @@ module AddressBook
                  }
     status_map[ABAddressBookGetAuthorizationStatus()]
   end
-
 end
