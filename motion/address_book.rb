@@ -52,9 +52,4 @@ module AddressBook
                  }
     status_map[ABAddressBookGetAuthorizationStatus()]
   end
-
-  def create_with_options_available?
-    error = nil
-    ABAddressBookCreateWithOptions(nil, error) rescue false
-  end
 end
