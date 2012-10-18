@@ -1,3 +1,13 @@
+# Hacky ?? Maybe! Don't judge me!
+class Object
+  def ABAddressBookCreateWithOptions(options, error)
+    ABAddressBookCreate()
+  end
+  def ABAddressBookRequestAccessWithCompletion(address_book, &callback)
+    callback.call(true, nil)
+  end
+end
+
 module AddressBook
   module_function
 
