@@ -1,17 +1,15 @@
-# Hacky ?? Maybe! Don't judge me!
-class Object
+module AddressBook
+  module_function
+
+  # Hacky ?? Maybe! Don't judge me!
   unless UIDevice.currentDevice.systemVersion >= '6'
-    def _ABAddressBookCreateWithOptions(options, error)
+    def ABAddressBookCreateWithOptions(options, error)
       ABAddressBookCreate()
     end
-    def _ABAddressBookRequestAccessWithCompletion(address_book, &callback)
+    def ABAddressBookRequestAccessWithCompletion(address_book, &callback)
       callback.call(true, nil)
     end
   end
-end
-
-module AddressBook
-  module_function
 
   def address_book
     if UIDevice.currentDevice.systemVersion >= '6'
