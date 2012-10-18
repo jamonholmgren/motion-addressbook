@@ -56,6 +56,7 @@ module AddressBook
                    KABAuthorizationStatusDenied        => :denied,
                    KABAuthorizationStatusAuthorized    => :authorized
                  }
-    status_map[ABAddressBookGetAuthorizationStatus()]
+    # status_map[ABAddressBookGetAuthorizationStatus()]
+    
   end
 end
