@@ -1,30 +1,20 @@
 module AddressBook
   module_function
 
-  # Hacky ?? Maybe! Don't judge me!
-  # unless UIDevice.currentDevice.systemVersion >= '6'
-  #   def ABAddressBookCreateWithOptions(options, error)
-  #     ABAddressBookCreate()
-  #   end
-  #   def ABAddressBookRequestAccessWithCompletion(address_book, &callback)
-  #     callback.call(true, nil)
-  #   end
-  # end
-
   def address_book
-    if UIDevice.currentDevice.systemVersion >= '6'
-      ios6_create
-    else
+    # if UIDevice.currentDevice.systemVersion >= '6'
+    #   ios6_create
+    # else
       ios5_create
-    end
+    # end
   end
 
-  def ios6_create
-    error = nil
-    # address_book = ABAddressBookCreateWithOptions(nil, error)
-    request_authorization unless authorized?
-    address_book
-  end
+  # def ios6_create
+  #   error = nil
+  #   address_book = ABAddressBookCreateWithOptions(nil, error)
+  #   request_authorization unless authorized?
+  #   address_book
+  # end
 
   def ios5_create
     ABAddressBookCreate()
@@ -36,21 +26,22 @@ module AddressBook
       return true
     end
 
-    synchronous = !!block
-    access_callback = lambda { |granted, error|
-      # not sure what to do with error ... so we're ignoring it
-      @address_book_access_granted = granted
-      block.call(@address_book_access_granted) unless block.nil?
-    }
+    # synchronous = !!block
+    # access_callback = lambda { |granted, error|
+    #   # not sure what to do with error ... so we're ignoring it
+    #   @address_book_access_granted = granted
+    #   block.call(@address_book_access_granted) unless block.nil?
+    # }
 
     # ABAddressBookRequestAccessWithCompletion address_book, access_callback
-    if synchronous
-      # Wait on the asynchronous callback before returning.
-      while @address_book_access_granted.nil? do
-        sleep 0.1
-      end
-    end
-    @address_book_access_granted
+    # if synchronous
+    #   # Wait on the asynchronous callback before returning.
+    #   while @address_book_access_granted.nil? do
+    #     sleep 0.1
+    #   end
+    # end
+    # @address_book_access_granted
+    true
   end
 
   def authorized?
@@ -58,13 +49,13 @@ module AddressBook
   end
 
   def authorization_status
-    return :authorized unless UIDevice.currentDevice.systemVersion >= '6'
+    return :authorized #unless UIDevice.currentDevice.systemVersion >= '6'
 
     status_map = { KABAuthorizationStatusNotDetermined => :not_determined,
                    KABAuthorizationStatusRestricted    => :restricted,
                    KABAuthorizationStatusDenied        => :denied,
                    KABAuthorizationStatusAuthorized    => :authorized
                  }
-    # status_map[ABAddressBookGetAuthorizationStatus()]
+    status_map[ABAddressBookGetAuthorizationStatus()]
   end
 end
