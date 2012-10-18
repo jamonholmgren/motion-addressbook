@@ -1,10 +1,12 @@
 # Hacky ?? Maybe! Don't judge me!
 class Object
-  def ABAddressBookCreateWithOptions(options, error)
-    ABAddressBookCreate()
-  end
-  def ABAddressBookRequestAccessWithCompletion(address_book, &callback)
-    callback.call(true, nil)
+  unless UIDevice.currentDevice.systemVersion >= '6'
+    def _ABAddressBookCreateWithOptions(options, error)
+      ABAddressBookCreate()
+    end
+    def _ABAddressBookRequestAccessWithCompletion(address_book, &callback)
+      callback.call(true, nil)
+    end
   end
 end
 
